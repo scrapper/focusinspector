@@ -18,7 +18,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/scrapper/focusinspector"
   gem.license = "MIT"
   gem.summary = %Q{Utility for DSLR photographers}
-  gem.description = %Q{Allows you to view active focus points and fine tune your lenses}
+  gem.description = %Q{Allows you to view active focus points in taken images and to fine tune your lenses}
   gem.email = "chris@linux.com"
   gem.authors = ["Chris Schlaeger"]
   # dependencies defined in Gemfile

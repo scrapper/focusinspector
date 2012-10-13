@@ -1,6 +1,8 @@
 = focusinspector
 
-Description goes here.
+Simple utility for DSLR photographers. It allows you to overlay the
+used focus points over the image. It can also be used to fine tune
+your lens focus.
 
 == Contributing to focusinspector
  
