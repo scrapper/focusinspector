@@ -1,38 +1,61 @@
+#!/usr/bin/env ruby -w
+# encoding: UTF-8
+#
+# Focus Inspector - The focus inspection and lens calibration software.
+#
+# Copyright (c) 2012 by Chris Schlaeger <chris@linux.com>
+#
+# This program is Open Source software; you can redistribute it and/or modify
+# it under the terms of MIT license as shipped with this software.
+
 class AppConfig
 
-  attr_reader :imageFile, :details, :sharpness, :view
+  attr_reader :imageFile, :command, :viewer
 
   def initialize(args)
     @imageFile = nil
-    @details = false
-    @sharpness = false
-    @view = false
+    @command = nil
+    @viewer = 'gwenview'
 
     version = IO.read(File.expand_path(File.dirname(__FILE__) +
                                        "/../../VERSION")).strip
 
     opts = OptionParser.new
-    opts.banner = "LensTuner v#{version}  " +
-                  "(c) Copyright 2012 by Chris Schlaeger\n\n" +
-                  "Usage: lenstuner [options] <ImageFile>"
+    opts.banner = <<"EOT"
+Focus Inspector v#{version}  (c) Copyright 2012 by Chris Schlaeger
 
-    opts.on('-d', '--details', 'Show auto focus details') do
-      @details = true
-    end
+Usage: focusinspector [options] <command> <ImageFile>
+EOT
 
-    opts.on('-s', '--sharpness', 'Compute the sharpness around the ' +
-                                 'focus point') do
-      @sharpness = true
-    end
-    opts.on('-f', '--focuspoints', 'Display image with focus points') do
-      @view = true
+    opts.on('--viewer <viewer>', 'Image viewer to use') do |v|
+      @viewer = v
     end
 
     opts.on_tail('-h', '--help', 'Show this message') do
       puts opts
     end
 
-    @imageFile = opts.parse(args).first
+    opts.separator ""
+    opts.separator <<"EOT"
+Supported commands are:
+  show    : Show image with focus points overlay
+  measure : Measure the sharpness of a photo of the test chart
+  list    : List some focusing information of the image
+
+EOT
+
+    opts.order!
+    @command = ARGV[0]
+    unless @command
+      Log.error('Command is missing')
+      puts opts
+    end
+    unless %w( show measure list ).include?(command)
+      Log.error("Unknown command #{@command}")
+      puts opts
+    end
+
+    @imageFile = ARGV[1]
     unless @imageFile
       Log.error('Image file name missing.')
       puts opts

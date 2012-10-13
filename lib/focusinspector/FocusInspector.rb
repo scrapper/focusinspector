@@ -1,3 +1,13 @@
+#!/usr/bin/env ruby -w
+# encoding: UTF-8
+#
+# Focus Inspector - The focus inspection and lens calibration software.
+#
+# Copyright (c) 2012 by Chris Schlaeger <chris@linux.com>
+#
+# This program is Open Source software; you can redistribute it and/or modify
+# it under the terms of MIT license as shipped with this software.
+
 require 'focusinspector/Log'
 require 'focusinspector/AppConfig'
 require 'focusinspector/Camera'
@@ -17,19 +27,16 @@ class FocusInspector
     focusInfo = Camera.new(@imageFile)
     x, y = focusInfo.primaryAutoFocusPoint
 
-    if @config.details
+    case @config.command
+    when 'list'
       focusInfo.printDetails
-    end
-
-    if @config.sharpness
+    when 'measure'
       sm = SharpnessMeter.new(@jpgFile)
       puts "Sharpness:  %.2f%%  (%s)" % [ (sm.measure(x, y) * 100.0),
            focusInfo.contrastDetectAF? ? 'Contrast Detection AF' :
            "FP: #{focusInfo.focusPoint}  AFFT: #{focusInfo.focusFineTune}" ]
-    end
-
-    if @config.view
-      im = ImageMarker.new(@jpgFile, *focusInfo.focusAreaSize)
+    when 'show'
+      im = ImageMarker.new(@jpgFile, *focusInfo.focusAreaSize, @config.viewer)
       im.mark(x, y, 'red', true)
 
       activeFPxy = focusInfo.activeFocusPoints
@@ -47,7 +54,10 @@ class FocusInspector
       @tmpJPGfile = Tempfile.new('lenstuner-jpg')
       @tmpJPGfile.close
       @jpgFile = @tmpJPGfile.path
-      system("dcraw -c -e #{@imageFile} > #{@jpgFile}")
+      command = "dcraw -c -e #{@imageFile} > #{@jpgFile}"
+      unless system(command)
+        Log.error("Cannot execute '#{command}'")
+      end
     else
       @jpgFile = @imageFile
     end

@@ -4,6 +4,76 @@ Simple utility for DSLR photographers. It allows you to overlay the
 used focus points over the image. It can also be used to fine tune
 your lens focus.
 
+== Installation
+
+Before you install this software, make sure you have the following
+dependencies installed:
+
+* ImageMagick: You need to install the header files (-devel package)
+as well. (http://www.imagemagick.org/script/index.php)
+* exiftool: Needed to extract EXIF information from images.
+(http://owl.phy.queensu.ca/~phil/exiftool/)
+* dcraw: Needed to extract the JPG thumbnail from raw files
+(http://www.cybercom.net/~dcoffin/dcraw/)
+* gwenview: This is the default image viewer of the KDE environment.
+You can use any other software that can show JPG files but you need
+to use the --viewer option to specify it on the command line.
+
+All these package can be found on the commonly used Linux distros.
+You can easily install them with the package manager.
+
+Additionally, you need to have the following ruby gem packages installed:
+
+* rmagick
+* mini_exiftool
+
+== Usage
+
+Focus Inspector has 3 usage modes:
+
+=== Show focus grid and active focus points
+
+Display a JPG or raw file with focus grid overlay. The file needs
+to have proper EXIF information.
+
+  focusinspector show DSC_1234.NEF
+
+If you don't have KDE installed, you need to use the --viewer option
+to specify the JPG viewer to be used.
+
+=== Measure sharpness of the image of the FI test chart
+
+This only works with an photograph of the Focus Inspector test chart.
+The test pattern must be surrounding the active focus point and
+should roughly cover a quarter of the total image.
+
+  focusinspector measure DSC_1234.NEF
+
+The result is a sharpness value in percent. This is not really an
+absolute value, but it can be used to compare sharpness of images
+that were taken under the same lighting conditions with the same test
+chart.
+
+=== List some focusing relevant EXIF data
+
+Just for convenience.
+
+  focusinspector list DSC_1234.NEF
+
+== Supported Cameras
+
+Currently, only the following cameras are supported:
+
+* Nikon D5100
+* Nikon D300 and D300s
+* Nikon D800 and D800E
+
+Adding other cameras is fairly straight forward. The location of all
+focus points needs to be added to lib/focusinspector/Camera.rb.
+Unfortunately, not all EXIF tags are standardized across camera
+vendors. Adding support for other vendors than Nikon might require
+some additional work to find and parse the right EXIF tags.
+
 == Contributing to focusinspector
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
@@ -14,7 +84,7 @@ your lens focus.
 * Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
 * Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
 
-== Copyright
+== Copyright and lincense
 
 Copyright (c) 2012 Chris Schlaeger. See LICENSE.txt for
 further details.

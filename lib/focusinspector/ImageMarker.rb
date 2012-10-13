@@ -1,7 +1,16 @@
+#!/usr/bin/env ruby -w
+# encoding: UTF-8
+#
+# Focus Inspector - The focus inspection and lens calibration software.
+#
+# Copyright (c) 2012 by Chris Schlaeger <chris@linux.com>
+#
+# This program is Open Source software; you can redistribute it and/or modify
+# it under the terms of MIT license as shipped with this software.
 
 class ImageMarker
 
-  def initialize(imageFile, w, h)
+  def initialize(imageFile, w, h, viewer)
     begin
       @image = Magick::Image.read(imageFile).first
       # The size of the auto focus area.
@@ -10,6 +19,7 @@ class ImageMarker
     rescue
       Log.error("Cannot open image file #{imageFile}")
     end
+    @viewer = viewer
   end
 
   def mark(x, y, color, bold = false)
@@ -31,7 +41,7 @@ class ImageMarker
       @image.rotate!(270)
     end
 
-    ImageViewer.new(@image)
+    ImageViewer.new(@image, @viewer)
   end
 
 end
