@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.date = "2012-10-13"
   s.description = "Allows you to view active focus points in taken images and to fine tune your lenses"
   s.email = "chris@linux.com"
+  s.executables = ["focusinspector"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
@@ -19,12 +20,23 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
     ".rspec",
+    "FI-Test-Chart.pdf",
     "Gemfile",
+    "Gemfile.lock",
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "bin/focusinspector",
+    "focusinspector.gemspec",
     "lib/focusinspector.rb",
+    "lib/focusinspector/AppConfig.rb",
+    "lib/focusinspector/Camera.rb",
+    "lib/focusinspector/FocusInspector.rb",
+    "lib/focusinspector/ImageMarker.rb",
+    "lib/focusinspector/ImageViewer.rb",
+    "lib/focusinspector/Log.rb",
+    "lib/focusinspector/SharpnessMeter.rb",
     "spec/focusinspector_spec.rb",
     "spec/spec_helper.rb"
   ]
