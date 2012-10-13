@@ -9,15 +9,11 @@ your lens focus.
 Before you install this software, make sure you have the following
 dependencies installed:
 
-* ImageMagick: You need to install the header files (-devel package)
-as well. (http://www.imagemagick.org/script/index.php)
-* exiftool: Needed to extract EXIF information from images.
-(http://owl.phy.queensu.ca/~phil/exiftool/)
-* dcraw: Needed to extract the JPG thumbnail from raw files
-(http://www.cybercom.net/~dcoffin/dcraw/)
-* gwenview: This is the default image viewer of the KDE environment.
-You can use any other software that can show JPG files but you need
-to use the --viewer option to specify it on the command line.
+* ImageMagick: You need to install the header files (-devel package) as well. (http://www.imagemagick.org/script/index.php)
+* exiftool: Needed to extract EXIF information from images. (http://owl.phy.queensu.ca/~phil/exiftool/)
+* dcraw: Needed to extract the JPG thumbnail from raw files. (http://www.cybercom.net/~dcoffin/dcraw/)
+* gwenview: This is the default image viewer of the KDE environment.  You can use any other software that can show JPG files but you need to use the --viewer option to specify it on the command line.
+* ruby 1.9: Focus Inspector is written in Ruby (http://www.ruby-lang.org/en/)
 
 All these package can be found on the commonly used Linux distros.
 You can easily install them with the package manager.
@@ -26,6 +22,11 @@ Additionally, you need to have the following ruby gem packages installed:
 
 * rmagick
 * mini_exiftool
+
+These will be automatically installed when you install Focus
+Inspector as a gem package.
+
+  gem install focusinspector
 
 == Usage
 
